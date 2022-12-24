@@ -71,3 +71,12 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+## Notes
+
+-create schema
+
+- import inside module inorder to use it from service and controller
+- @Param('id') id:string
+- @Body() ( for all )
+-
