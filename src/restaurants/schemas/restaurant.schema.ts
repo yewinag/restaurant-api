@@ -1,10 +1,11 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 
 export enum Category {
   FAST_FOOD = 'Fast Food',
   CAFE = 'Cafe',
-  FINE_DINING = 'Fine Dining',
+  FINE_DINNING = 'Fine Dinning',
 }
+
 @Schema()
 export class Restaurant {
   @Prop()
@@ -17,7 +18,7 @@ export class Restaurant {
   email: string;
 
   @Prop()
-  phoneNo: string;
+  phoneNo: number;
 
   @Prop()
   address: string;

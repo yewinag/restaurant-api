@@ -6,24 +6,25 @@ import {
   Param,
   Patch,
   Post,
+  Put,
   Query,
 } from '@nestjs/common';
+
 import { Query as ExpressQuery } from 'express-serve-static-core';
 import { RestaurantsService } from './restaurants.service';
 import { Restaurant } from './schemas/restaurant.schema';
-import { CreateRestaurantDto } from './dto/create-restaurant-dto';
+import { CreateRestaurantDto } from './dto/create-restaurant.dto';
+import { UpdateRestaurantDto } from './dto/update-restaurant.dto';
+
 @Controller('restaurants')
 export class RestaurantsController {
   constructor(private restaurantsService: RestaurantsService) {}
-  // getAll
+
   @Get()
-  async getAllRestaurants(
-    @Query()
-    query: ExpressQuery,
-  ): Promise<Restaurant[]> {
+  async getAllRestaurants(@Query() query: ExpressQuery): Promise<Restaurant[]> {
     return this.restaurantsService.findAll(query);
   }
-  // create
+
   @Post()
   async createRestaurant(
     @Body()
@@ -31,7 +32,7 @@ export class RestaurantsController {
   ): Promise<Restaurant> {
     return this.restaurantsService.create(restaurant);
   }
-  // get one
+
   @Get(':id')
   async getRestaurant(
     @Param('id')
@@ -39,17 +40,19 @@ export class RestaurantsController {
   ): Promise<Restaurant> {
     return this.restaurantsService.getById(id);
   }
-  // udpdate
+
   @Patch(':id')
   async updateRestaurant(
     @Param('id')
     id: string,
     @Body()
-    restaurant: Restaurant,
+    restaurant: UpdateRestaurantDto,
   ): Promise<Restaurant> {
+    await this.restaurantsService.getById(id);
+
     return this.restaurantsService.updateById(id, restaurant);
   }
-  // delete
+
   @Delete(':id')
   async deleteRestaurant(
     @Param('id')

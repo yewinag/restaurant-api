@@ -79,4 +79,5 @@ Nest is [MIT licensed](LICENSE).
 - import inside module inorder to use it from service and controller
 - @Param('id') id:string
 - @Body() ( for all )
+- you put the params at controller, but if you dont put at api call, will return mongo non-negative errro;
 -
