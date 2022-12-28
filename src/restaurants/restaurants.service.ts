@@ -9,6 +9,7 @@ import * as mongoose from 'mongoose';
 import { CreateRestaurantDto } from './dto/create-restaurant.dto';
 import { Query } from 'express-serve-static-core';
 import { UpdateRestaurantDto } from './dto/update-restaurant.dto';
+import APIFeatures from 'src/utils/apiFeature.utils';
 @Injectable()
 export class RestaurantsService {
   constructor(
@@ -38,7 +39,11 @@ export class RestaurantsService {
   }
   // create
   async create(restaurant): Promise<Restaurant> {
-    const res = await this.restaurantModel.create(restaurant);
+    const location = await APIFeatures.getRestaurantLocation(
+      restaurant.address,
+    );
+
+    const res = await this.restaurantModel.create({ ...restaurant, location });
     return res;
   }
   // get restaurant by id
