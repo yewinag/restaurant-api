@@ -17,10 +17,10 @@ export class RestaurantsService {
     private restaurantModel: mongoose.Model<Restaurant>,
   ) {}
 
-  // getall restaurants
+  // Get all Restaurants  =>  GET  /restaurants
   async findAll(query: Query): Promise<Restaurant[]> {
     const resPerPage = 2;
-    const currentPage = Number(query.page);
+    const currentPage = Number(query.page) || 1;
     const skip = resPerPage * (currentPage - 1);
 
     const keyword = query.keyword
@@ -31,12 +31,15 @@ export class RestaurantsService {
           },
         }
       : {};
+
     const restaurants = await this.restaurantModel
       .find({ ...keyword })
       .limit(resPerPage)
       .skip(skip);
+
     return restaurants;
   }
+
   // create
   async create(restaurant): Promise<Restaurant> {
     const location = await APIFeatures.getRestaurantLocation(
